@@ -33,8 +33,7 @@ O sistema foi desenvolvido em **Python** utilizando **Jupyter Notebook** e técn
 
 Foi utilizada a base pública do **TMDB 5000 Movie Dataset**, disponível no Kaggle.
 
-Arquivos utilizados:
-
+Baixe os arquivos e coloque-os na pasta raiz do projeto:
 - `tmdb_5000_movies.csv`
 - `tmdb_5000_credits.csv`
 
