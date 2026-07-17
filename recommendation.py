@@ -71,7 +71,7 @@ def recommend(movie, movies, similarity):
 @st.cache_data(show_spinner=False)
 def get_movie_details(movie_id):
     url = (
-        f"https://api.themoviedb.org/3/movie/{movie_id}"
+        f"https://api.themoviedb.org/3/search/movie"
         f"?api_key={API_KEY}"
         "&language=pt-BR"
     )
