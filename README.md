@@ -106,3 +106,5 @@ O algoritmo segue as seguintes etapas:
 - Exibição de pôsteres utilizando a API do TMDB.
 - Recomendação personalizada baseada em avaliações dos usuários.
 - Deploy da aplicação na web.
+- Colocar filmes de acordo com seu gosto musical (ouço ABBA, recomenda Mamma Mia)
+- Mudar biblioteca de filmes (mais recentes e maior)
