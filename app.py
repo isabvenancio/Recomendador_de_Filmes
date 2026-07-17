@@ -13,32 +13,47 @@ st.set_page_config(
 st.title("🎬 Sistema de Recomendação de Filmes")
 
 st.write(
-    "Escolha um filme e receba recomendações baseadas em similaridade."
+    "Escolha um filme e descubra outros títulos semelhantes."
 )
 
 
-movie = st.selectbox(
+selected_movie = st.selectbox(
     "Selecione um filme:",
     movies["title"].values
 )
 
 
-if st.button("🔎 Recomendar"):
+if st.button("🎥 Recomendar"):
 
-    recommendations = recommend(movie, movies, similarity)
+    with st.spinner("Buscando recomendações..."):
 
-    st.subheader("Filmes recomendados:")
+        recommendations = recommend(
+            selected_movie,
+            movies,
+            similarity
+        )
 
-    cols = st.columns(5)
+    if recommendations:
 
-    for index, film in enumerate(recommendations):
+        cols = st.columns(5)
 
-        with cols[index]:
-            st.subheader(film)
+        for col, movie in zip(cols, recommendations):
 
-            poster = get_movie_poster(film)
+            with col:
 
-            if poster:
-                st.image(poster)
-            else:
-                st.write("Sem imagem")
+                poster = get_movie_poster(movie)
+
+                if poster:
+                    st.image(
+                        poster,
+                        use_container_width=True
+                    )
+                else:
+                    st.warning("Pôster não encontrado")
+
+                st.markdown(
+                    f"**{movie}**"
+                )
+
+    else:
+        st.error("Nenhuma recomendação encontrada.")
