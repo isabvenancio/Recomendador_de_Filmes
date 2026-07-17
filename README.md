@@ -101,10 +101,7 @@ O algoritmo segue as seguintes etapas:
 
 ## 🚀 Melhorias Futuras
 
-- Interface gráfica com Streamlit ou Flask.
 - Pesquisa por aproximação de nomes de filmes.
-- Exibição de pôsteres utilizando a API do TMDB.
 - Recomendação personalizada baseada em avaliações dos usuários.
-- Deploy da aplicação na web.
 - Colocar filmes de acordo com seu gosto musical (ouço ABBA, recomenda Mamma Mia)
 - Mudar biblioteca de filmes (mais recentes e maior)

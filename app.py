@@ -1,5 +1,5 @@
 import streamlit as st
-from recommendation import load_data, recommend, get_movie_poster
+from recommendation import load_data, recommend, get_movie_details
 
 movies, similarity = load_data()
 
@@ -41,11 +41,11 @@ if st.button("🎥 Recomendar"):
 
             with col:
 
-                poster = get_movie_poster(movie)
+                details = get_movie_details(movie["id"])
 
-                if poster:
+                if details:
                     st.image(
-                        poster,
+                        details,
                         use_container_width=True
                     )
                 else:
@@ -57,3 +57,22 @@ if st.button("🎥 Recomendar"):
 
     else:
         st.error("Nenhuma recomendação encontrada.")
+
+st.image(details["poster"])
+
+st.markdown(f"### {details['title']}")
+
+st.caption(f"⭐ {details['rating']:.1f}")
+
+st.caption(f"📅 {details['year']}")
+
+st.caption(f"🎭 {details['genres']}")
+
+st.caption(f"⏱️ {details['runtime']} min")
+
+st.write(details["overview"][:180] + "...")
+
+st.link_button(
+    "🎬 Ver no TMDB",
+    details["tmdb_url"]
+)

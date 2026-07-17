@@ -56,22 +56,23 @@ def recommend(movie, movies, similarity):
     recommendations = []
 
     for movie_index, _ in movie_list:
+
+        movie = movies.iloc[movie_index]
+
         recommendations.append(
-            movies.iloc[movie_index]["title"]
+            {
+                "id": int(movie["movie_id"]),
+                "title": movie["title"]
+            }
         )
 
     return recommendations
 
 @st.cache_data(show_spinner=False)
-def get_movie_poster(title):
-    """
-    Busca o pôster do filme utilizando a API do TMDB.
-    """
-
+def get_movie_details(movie_id):
     url = (
-        "https://api.themoviedb.org/3/search/movie"
+        f"https://api.themoviedb.org/3/movie/{movie_id}"
         f"?api_key={API_KEY}"
-        f"&query={title}"
         "&language=pt-BR"
     )
 
@@ -81,15 +82,27 @@ def get_movie_poster(title):
 
         data = response.json()
 
-        if not data.get("results"):
-            return None
-
-        poster = data["results"][0].get("poster_path")
-
-        if not poster:
-            return None
-
-        return f"https://image.tmdb.org/t/p/w500{poster}"
+        return {
+            "title": data.get("title"),
+            "poster": (
+                f"https://image.tmdb.org/t/p/w500{data['poster_path']}"
+                if data.get("poster_path")
+                else None
+            ),
+            "overview": data.get("overview"),
+            "rating": data.get("vote_average"),
+            "year": (
+                data.get("release_date", "")[:4]
+                if data.get("release_date")
+                else ""
+            ),
+            "genres": ", ".join(
+                genre["name"] for genre in data.get("genres", [])
+            ),
+            "runtime": data.get("runtime"),
+            "homepage": data.get("homepage"),
+            "tmdb_url": f"https://www.themoviedb.org/movie/{movie_id}"
+        }
 
     except requests.RequestException:
         return None
