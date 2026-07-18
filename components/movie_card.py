@@ -2,7 +2,7 @@ import streamlit as st
 from components.movie_details import movie_details
 
 
-def movie_card(details, similarity):
+def movie_card(details, similarity, card_index=0):
     """
     Exibe um card moderno com as informações do filme.
     """
@@ -126,7 +126,7 @@ def movie_card(details, similarity):
         st.write(overview)
 
         # Botão para abrir o dialog com os detalhes completos do filme
-        if st.button("🔍 Ver Detalhes", key=f"btn_{details.get('id', 0)}", use_container_width=True):
+        if st.button("🔍 Ver Detalhes", key=f"btn_{details.get('id', 0)}_{card_index}", use_container_width=True):
             movie_details(details)
 
         st.link_button(

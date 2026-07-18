@@ -39,7 +39,7 @@ if recommend_button:
 
         cols = st.columns(5)
 
-        for col, movie in zip(cols, recommendations):
+        for idx, (col, movie) in enumerate(zip(cols, recommendations)):
 
             with col:
 
@@ -65,7 +65,8 @@ if recommend_button:
 
                 movie_card(
                     details,
-                    movie["similarity"]
+                    movie["similarity"],
+                    card_index=idx
                 )
 
     else:
