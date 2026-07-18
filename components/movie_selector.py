@@ -1,4 +1,5 @@
 import streamlit as st
+import textwrap
 
 
 def movie_selector(movie_titles):
@@ -7,24 +8,26 @@ def movie_selector(movie_titles):
     """
 
     st.markdown(
-        """
-        <div class="selector-card">
+        textwrap.dedent(
+            """
+            <div class="selector-card">
 
-            <div class="selector-icon">
-                🎬
+                <div class="selector-icon">
+                    🎬
+                </div>
+
+                <h2 class="selector-title">
+                    Qual filme você gostou?
+                </h2>
+
+                <p class="selector-subtitle">
+                    Escolha um filme da lista abaixo e nosso algoritmo encontrará
+                    cinco recomendações semelhantes utilizando Machine Learning.
+                </p>
+
             </div>
-
-            <h2 class="selector-title">
-                Qual filme você gostou?
-            </h2>
-
-            <p class="selector-subtitle">
-                Escolha um filme da lista abaixo e nosso algoritmo encontrará
-                cinco recomendações semelhantes utilizando Machine Learning.
-            </p>
-
-        </div>
-        """,
+            """
+        ),
         unsafe_allow_html=True
     )
 
