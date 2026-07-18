@@ -1,664 +1,488 @@
-/* =========================
-   GOOGLE FONT
-========================= */
+/* ==========================================================================
+   GOOGLE FONTS
+   ========================================================================== */
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Manrope:wght@400;500;600;700&display=swap');
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+/* ==========================================================================
+   THEME VARIABLES (Cinema Noir - Dark Mode Premium)
+   ========================================================================== */
+:root {
+    /* Fundo */
+    --bg-primary: #0A0A0C;
+    --bg-secondary: #121214;
+    --bg-tertiary: #1A1A1E;
+    --bg-elevated: #242429;
+    --bg-overlay: rgba(0, 0, 0, 0.80);
 
-/* =========================
-   GLOBAL
-========================= */
+    /* Superfícies (Cards) */
+    --card-default: #16161A;
+    --card-hover: #1E1E23;
+    --card-active: #25252B;
+    --card-border: #2C2C33;
 
-html,
-body,
-[class*="css"]{
-    font-family: 'Inter', sans-serif;
+    /* Acentos */
+    --primary: #C41E3A; /* Crimson */
+    --primary-hover: #D62839;
+    --primary-muted: rgba(196, 30, 58, 0.15);
+    
+    --secondary: #D4AF37; /* Gold */
+    --secondary-muted: rgba(212, 175, 55, 0.15);
+
+    /* Texto */
+    --text-primary: #F5F5F7;
+    --text-secondary: #A1A1AA;
+    --text-tertiary: #71717A;
+    --text-muted: #52525B;
+    --text-inverse: #0A0A0C;
+
+    /* Estados */
+    --success: #10B981;
+    --success-muted: rgba(16, 185, 129, 0.15);
+    --error: #EF4444;
+    --error-muted: rgba(239, 68, 68, 0.15);
+    --warning: #F59E0B;
+    --warning-muted: rgba(245, 158, 11, 0.15);
+    --info: #3B82F6;
+    --info-muted: rgba(59, 130, 246, 0.15);
+
+    /* Tipografia */
+    --font-display: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+    --font-body: 'Manrope', system-ui, -apple-system, sans-serif;
+
+    /* Sombras */
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.35);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.45);
+    --shadow-primary: 0 8px 24px rgba(196, 30, 58, 0.25);
+    --shadow-glow: 0 0 24px rgba(196, 30, 58, 0.15);
 }
 
-/* Fundo */
-
-.stApp{
-
-    background: linear-gradient(
-        180deg,
-        #08111F 0%,
-        #101826 100%
-    );
-
-    color: white;
+/* ==========================================================================
+   GLOBAL RESET & STREAMLIT OVERRIDES
+   ========================================================================== */
+html, body, [class*="css"] {
+    font-family: var(--font-body) !important;
+    color: var(--text-primary) !important;
 }
 
-/* =========================
-   TITLES
-========================= */
-
-.main-title{
-
-    font-size:52px;
-
-    font-weight:800;
-
-    color:white;
-
-    margin-bottom:10px;
+.stApp {
+    background: var(--bg-primary) !important;
+    color: var(--text-primary) !important;
 }
 
-.subtitle{
-
-    color:#B8C5D6;
-
-    font-size:20px;
-
-    margin-bottom:40px;
+h1, h2, h3, h4, h5, h6, 
+.navbar-logo, .hero-title, .selector-title, .movie-title, .footer h3 {
+    font-family: var(--font-display) !important;
 }
 
-/* =========================
-   CARDS
-========================= */
+/* Oculta marcações nativas irritantes do Streamlit se necessário */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {background: transparent !important;}
 
+/* ==========================================================================
+   COMPONENTS
+   ========================================================================== */
+
+/* NAVBAR */
+.navbar {
+    position: sticky;
+    top: 0;
+    z-index: 999;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 18px 32px;
+    margin-bottom: 40px;
+    background: rgba(10, 10, 12, 0.92);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--card-border);
+    box-shadow: var(--shadow-md);
+}
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.navbar-links {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+}
+
+.navbar-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    transition: 150ms ease;
+}
+
+.navbar-links a:hover {
+    color: var(--primary);
+    text-shadow: var(--shadow-glow);
+}
+
+/* HERO */
+/* O Streamlit envolve o HTML em div[data-testid="stMarkdownContainer"] que tem
+   text-align:left por padrão. Forçamos o alinhamento em toda a cadeia. */
+section.hero,
+.hero,
+div[data-testid="stMarkdownContainer"]:has(section.hero) {
+    text-align: center !important;
+}
+
+.hero {
+    padding: 80px 20px 60px;
+    margin-bottom: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.hero-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    border-radius: 9999px;
+    background: var(--primary-muted);
+    color: var(--primary);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 24px;
+    border: 1px solid rgba(196, 30, 58, 0.3);
+    text-align: center;
+}
+
+.hero-title {
+    font-family: var(--font-display) !important;
+    font-size: 48px !important;
+    font-weight: 700 !important;
+    color: var(--text-primary) !important;
+    line-height: 1.1 !important;
+    letter-spacing: -0.02em !important;
+    margin-bottom: 20px !important;
+    text-align: center !important;
+    width: 100%;
+}
+
+.hero-description {
+    max-width: 800px;
+    margin: 0 auto;
+    color: var(--text-secondary);
+    font-size: 18px;
+    line-height: 1.6;
+    text-align: center !important;
+    width: 100%;
+}
+
+/* MOVIE SELECTOR CARD */
+.selector-card {
+    max-width: 900px;
+    margin: auto;
+    text-align: center;
+    background: var(--card-default);
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid var(--card-border);
+    box-shadow: var(--shadow-md);
+    margin-bottom: 24px;
+}
+
+.selector-icon {
+    font-size: 42px;
+    margin-bottom: 16px;
+}
+
+.selector-title {
+    color: var(--text-primary);
+    font-size: 36px;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    margin-bottom: 12px;
+}
+
+.selector-subtitle {
+    color: var(--text-secondary);
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 16px;
+}
+
+/* NATIVE STREAMLIT BUTTONS (Crimson Premium) */
+.stButton > button {
+    width: 100% !important;
+    background: var(--primary) !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    border-radius: 12px !important;
+    padding: 14px 24px !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    font-family: var(--font-body) !important;
+    transition: 200ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: var(--shadow-sm) !important;
+}
+
+.stButton > button:hover {
+    background: var(--primary-hover) !important;
+    transform: translateY(-1px) !important;
+    box-shadow: var(--shadow-primary) !important;
+}
+
+.stButton > button:active {
+    transform: scale(0.98) !important;
+}
+
+/* NATIVE STREAMLIT LINK BUTTONS (Secondary Cinema Card style) */
+div[data-testid="stLinkButton"] > a {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    background: #1E1E23 !important;
+    color: #F5F5F7 !important;
+    border: 1px solid var(--card-border) !important;
+    border-radius: 12px !important;
+    padding: 14px 24px !important;
+    font-weight: 600 !important;
+    font-size: 16px !important;
+    font-family: var(--font-body) !important;
+    text-decoration: none !important;
+    transition: 200ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+div[data-testid="stLinkButton"] > a:hover {
+    background: #25252B !important;
+    border-color: #3A3A44 !important;
+    color: #FFFFFF !important;
+}
+
+/* NATIVE STREAMLIT SELECTBOX */
+div[data-baseweb="select"] {
+    border-radius: 12px !important;
+    background: #121214 !important;
+}
+
+div[data-baseweb="select"] > div {
+    border-radius: 12px !important;
+    background: #121214 !important;
+    border: 1px solid var(--card-border) !important;
+    color: var(--text-primary) !important;
+    padding: 4px 8px !important;
+}
+
+div[data-baseweb="select"] > div:focus-within {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 3px rgba(196, 30, 58, 0.25) !important;
+}
+
+/* Dropdown listbox items style overrides */
+ul[role="listbox"] {
+    background-color: #1A1A1E !important;
+    border: 1px solid var(--card-border) !important;
+    border-radius: 12px !important;
+}
+
+li[role="option"] {
+    color: var(--text-primary) !important;
+    transition: 150ms ease !important;
+}
+
+li[role="option"]:hover {
+    background-color: #2C2C33 !important;
+}
+
+li[role="option"][aria-selected="true"] {
+    color: var(--primary) !important;
+    background-color: rgba(196, 30, 58, 0.1) !important;
+}
+
+/* MOVIE CARDS GRID AND CONTAINERS */
 div[data-testid="stVerticalBlock"]:has(> div > .movie-card-anchor) {
-
-    background:#172033;
-
-    border-radius:18px;
-
-    padding:18px;
-
-    border:1px solid rgba(255,255,255,.05);
-
-    transition:.3s;
-
-    box-shadow:0 10px 25px rgba(0,0,0,.25);
-
-    height:100%;
+    background: var(--card-default) !important;
+    border-radius: 20px !important;
+    padding: 24px !important;
+    border: 1px solid var(--card-border) !important;
+    transition: 250ms cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: var(--shadow-md) !important;
+    height: 100% !important;
+    display: flex !important;
+    flex-direction: column !important;
 }
 
 div[data-testid="stVerticalBlock"]:has(> div > .movie-card-anchor):hover {
-
-    transform:translateY(-8px);
-
-    box-shadow:0 18px 35px rgba(124,58,237,.30);
+    transform: translateY(-2px) !important;
+    border-color: #3A3A44 !important;
+    box-shadow: var(--shadow-lg) !important;
 }
 
-/* =========================
-   BUTTONS
-========================= */
-
-.stButton>button{
-
-    width:100%;
-
-    background:#7C3AED;
-
-    color:white;
-
-    border:none;
-
-    border-radius:12px;
-
-    padding:14px;
-
-    font-weight:600;
-
-    transition:.3s;
+.movie-title {
+    font-size: 22px !important;
+    font-weight: 600 !important;
+    color: var(--text-primary) !important;
+    margin-top: 16px !important;
+    margin-bottom: 8px !important;
+    line-height: 1.3 !important;
 }
 
-.stButton>button:hover{
-
-    background:#8B5CF6;
-
-    transform:translateY(-2px);
+.rating-badge {
+    background: var(--secondary-muted) !important;
+    color: var(--secondary) !important;
+    text-align: center !important;
+    padding: 6px 12px !important;
+    border-radius: 9999px !important;
+    font-weight: 600 !important;
+    font-size: 12px !important;
+    border: 1px solid rgba(212, 175, 55, 0.3) !important;
+    margin-bottom: 12px !important;
+    display: inline-block !important;
+    width: 100% !important;
 }
 
-/* =========================
-   SELECTBOX
-========================= */
-
-.stSelectbox{
-
-    margin-top:10px;
-
-    margin-bottom:20px;
+.year-badge {
+    background: var(--bg-elevated) !important;
+    color: var(--text-secondary) !important;
+    text-align: center !important;
+    padding: 6px 12px !important;
+    border-radius: 9999px !important;
+    font-weight: 600 !important;
+    font-size: 12px !important;
+    border: 1px solid var(--card-border) !important;
+    margin-bottom: 12px !important;
+    display: inline-block !important;
+    width: 100% !important;
 }
 
-/* =========================
-   FOOTER
-========================= */
-
-.footer{
-
-    margin-top:80px;
-
-    text-align:center;
-
-    color:#94A3B8;
-
-    font-size:14px;
+.stImage img {
+    border-radius: 16px !important;
+    transition: 250ms ease !important;
 }
 
-/* =========================
-   BADGES
-========================= */
-
-.badge{
-
-    display:inline-block;
-
-    background:#7C3AED;
-
-    color:white;
-
-    border-radius:30px;
-
-    padding:5px 12px;
-
-    font-size:12px;
-
-    margin-top:8px;
+.stImage img:hover {
+    transform: scale(1.02) !important;
 }
 
-/* ==========================================
-   NAVBAR
-========================================== */
-
-.navbar{
-
-    position:sticky;
-
-    top:0;
-
-    z-index:999;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    padding:18px 32px;
-
-    margin-bottom:40px;
-
-    background:rgba(23,32,51,.70);
-
-    backdrop-filter:blur(14px);
-
-    border:1px solid rgba(255,255,255,.06);
-
-    border-radius:18px;
-
-    box-shadow:0 8px 25px rgba(0,0,0,.30);
+/* COMPATIBILITY BAR */
+.compatibility {
+    margin: 16px 0 !important;
 }
 
-.navbar-logo{
-
-    display:flex;
-
-    align-items:center;
-
-    gap:12px;
-
-    font-size:26px;
-
-    font-weight:800;
-
-    color:white;
+.compatibility-title {
+    color: var(--text-secondary) !important;
+    font-size: 12px !important;
+    font-weight: 600 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.05em !important;
+    margin-bottom: 8px !important;
 }
 
-.navbar-links{
-
-    display:flex;
-
-    gap:28px;
-
-    align-items:center;
+.progress {
+    width: 100% !important;
+    height: 8px !important;
+    background: var(--bg-elevated) !important;
+    border-radius: 9999px !important;
+    overflow: hidden !important;
 }
 
-.navbar-links a{
-
-    color:#CBD5E1;
-
-    text-decoration:none;
-
-    font-weight:500;
-
-    transition:.3s;
+.progress-fill {
+    height: 100% !important;
+    background: linear-gradient(90deg, var(--primary), var(--primary-hover)) !important;
+    border-radius: 9999px !important;
 }
 
-.navbar-links a:hover{
-
-    color:#A855F7;
+.compatibility-value {
+    margin-top: 6px !important;
+    color: var(--text-primary) !important;
+    font-weight: 700 !important;
+    font-size: 14px !important;
 }
 
-/* ==========================================
-   HERO
-========================================== */
-
-.hero{
-
-    text-align:center;
-
-    padding:80px 20px 70px;
-
-    margin-bottom:50px;
-
+/* DIALOGS (Modais de Detalhes) */
+div[data-testid="stDialog"] {
+    background-color: var(--card-default) !important;
+    border: 1px solid var(--card-border) !important;
+    border-radius: 20px !important;
 }
 
-.hero-badge{
-
-    display:inline-block;
-
-    padding:8px 18px;
-
-    border-radius:999px;
-
-    background:rgba(124,58,237,.18);
-
-    color:#C4B5FD;
-
-    font-size:14px;
-
-    font-weight:600;
-
-    margin-bottom:25px;
-
+div[data-testid="stDialog"] h2 {
+    font-family: var(--font-display) !important;
+    color: var(--text-primary) !important;
 }
 
-.hero-title{
-
-    font-size:58px;
-
-    font-weight:800;
-
-    color:white;
-
-    line-height:1.1;
-
-    margin-bottom:20px;
-
+/* FOOTER */
+.footer {
+    margin-top: 96px;
+    padding: 48px 32px;
+    text-align: center;
+    background: var(--bg-primary);
+    border-top: 1px solid var(--card-border);
 }
 
-.hero-description{
-
-    max-width:850px;
-
-    margin:auto;
-
-    color:#94A3B8;
-
-    font-size:20px;
-
-    line-height:1.8;
-
+.footer h3 {
+    color: var(--text-primary);
+    font-size: 28px;
+    font-weight: 600;
+    margin-bottom: 16px;
 }
 
-/* ==========================================
-   MOVIE SELECTOR
-========================================== */
-
-.selector-card{
-
-    max-width:900px;
-
-    margin:auto;
-
-    text-align:center;
-
-    background:#172033;
-
-    padding:40px;
-
-    border-radius:24px;
-
-    border:1px solid rgba(255,255,255,.05);
-
-    box-shadow:0 15px 35px rgba(0,0,0,.30);
-
-    margin-bottom:25px;
+.footer p {
+    max-width: 600px;
+    margin: auto;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    font-size: 14px;
 }
 
-.selector-icon{
-
-    font-size:42px;
-
-    margin-bottom:15px;
+.footer-tech {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    flex-wrap: wrap;
 }
 
-.selector-title{
-
-    color:white;
-
-    font-size:34px;
-
-    font-weight:700;
-
-    margin-bottom:12px;
+.footer-tech span {
+    background: var(--card-default);
+    padding: 6px 12px;
+    border-radius: 9999px;
+    font-size: 12px;
+    font-weight: 600;
+    border: 1px solid var(--card-border);
+    color: var(--text-secondary);
 }
 
-.selector-subtitle{
-
-    color:#94A3B8;
-
-    font-size:17px;
-
-    line-height:1.8;
-
-    margin-bottom:10px;
+.footer-links {
+    margin-top: 32px;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
 }
 
-/* Selectbox */
-
-div[data-baseweb="select"]{
-
-    border-radius:14px;
-
-    background:#0F172A;
+.footer-links a {
+    color: var(--primary);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: 150ms ease;
 }
 
-div[data-baseweb="select"] > div{
-
-    border-radius:14px !important;
-
-    background:#0F172A !important;
-
-    border:1px solid rgba(255,255,255,.08);
+.footer-links a:hover {
+    color: var(--primary-hover);
+    text-decoration: underline;
 }
 
-/* ==========================================
-   MOVIE CARD
-========================================== */
-
-.movie-title{
-
-    font-size:24px;
-
-    font-weight:700;
-
-    color:white;
-
-    margin-top:12px;
-
-    margin-bottom:10px;
-}
-
-.rating-badge{
-
-    background:#F59E0B;
-
-    color:white;
-
-    text-align:center;
-
-    padding:8px;
-
-    border-radius:12px;
-
-    font-weight:700;
-
-    margin-bottom:10px;
-}
-
-.year-badge{
-
-    background:#2563EB;
-
-    color:white;
-
-    text-align:center;
-
-    padding:8px;
-
-    border-radius:12px;
-
-    font-weight:700;
-
-    margin-bottom:10px;
-}
-
-.stImage img{
-
-    border-radius:18px;
-
-    transition:.35s;
-}
-
-.stImage img:hover{
-
-    transform:scale(1.03);
-}
-
-/* ================================
-   EXPANDER
-================================ */
-
-.streamlit-expanderHeader{
-
-    background:#172033;
-
-    color:white;
-
-    border-radius:14px;
-
-    font-weight:600;
-}
-
-.streamlit-expanderContent{
-
-    background:#111827;
-
-    border-radius:0 0 14px 14px;
-}
-
-.badge-container{
-
-display:flex;
-
-gap:10px;
-
-flex-wrap:wrap;
-
-margin-top:8px;
-
-margin-bottom:14px;
-
-}
-
-.genre-badge{
-
-background:#8B5CF6;
-
-padding:6px 12px;
-
-border-radius:30px;
-
-font-size:12px;
-
-font-weight:600;
-
-}
-
-.runtime-badge{
-
-background:#2563EB;
-
-padding:6px 12px;
-
-border-radius:30px;
-
-font-size:12px;
-
-font-weight:600;
-
-}
-
-/* ==========================================
-   COMPATIBILIDADE
-========================================== */
-
-.compatibility{
-
-    margin:18px 0;
-}
-
-.compatibility-title{
-
-    color:#CBD5E1;
-
-    font-size:14px;
-
-    margin-bottom:8px;
-
-    font-weight:600;
-}
-
-.progress{
-
-    width:100%;
-
-    height:10px;
-
-    background:#334155;
-
-    border-radius:20px;
-
-    overflow:hidden;
-}
-
-.progress-fill{
-
-    height:100%;
-
-    background:linear-gradient(
-        90deg,
-        #7C3AED,
-        #A855F7
-    );
-
-    border-radius:20px;
-}
-
-.compatibility-value{
-
-    margin-top:8px;
-
-    color:white;
-
-    font-weight:700;
-
-    font-size:14px;
-}
-
-/* ==========================================
-   FOOTER
-========================================== */
-
-.footer{
-
-    margin-top:80px;
-
-    padding:50px 20px;
-
-    text-align:center;
-
-    color:#CBD5E1;
-
-}
-
-.footer hr{
-
-    border:0;
-
-    height:1px;
-
-    background:rgba(255,255,255,.08);
-
-    margin-bottom:40px;
-
-}
-
-.footer h3{
-
-    color:white;
-
-    font-size:28px;
-
-    margin-bottom:15px;
-
-}
-
-.footer p{
-
-    max-width:700px;
-
-    margin:auto;
-
-    line-height:1.8;
-
-    color:#94A3B8;
-
-}
-
-.footer-tech{
-
-    margin-top:30px;
-
-    display:flex;
-
-    justify-content:center;
-
-    gap:14px;
-
-    flex-wrap:wrap;
-
-}
-
-.footer-tech span{
-
-    background:#172033;
-
-    padding:8px 16px;
-
-    border-radius:25px;
-
-    font-size:14px;
-
-    border:1px solid rgba(255,255,255,.05);
-
-}
-
-.footer-links{
-
-    margin-top:35px;
-
-    display:flex;
-
-    justify-content:center;
-
-    gap:30px;
-
-}
-
-.footer-links a{
-
-    color:#A855F7;
-
-    text-decoration:none;
-
-    font-weight:600;
-
-}
-
-.footer-links a:hover{
-
-    color:white;
-
-}
-
-.footer-copy{
-
-    margin-top:30px;
-
-    font-size:13px;
-
-    color:#64748B;
-
+.footer-copy {
+    margin-top: 32px;
+    font-size: 12px;
+    color: var(--text-tertiary);
 }

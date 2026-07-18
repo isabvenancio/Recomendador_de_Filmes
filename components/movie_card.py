@@ -37,15 +37,7 @@ def movie_card(details, similarity, card_index=0):
         else:
             # Espaço reservado visualmente agradável se não houver poster
             st.markdown(
-                textwrap.dedent(
-                    """
-                    <div style="height: 270px; background: #1E293B; border-radius: 18px; 
-                                display: flex; align-items: center; justify-content: center;
-                                font-size: 40px; border: 1px dashed rgba(255,255,255,0.1); margin-bottom: 10px;">
-                        🎬
-                    </div>
-                    """
-                ),
+                """<div style="height: 270px; background: #1E293B; border-radius: 18px; display: flex; align-items: center; justify-content: center; font-size: 40px; border: 1px dashed rgba(255,255,255,0.1); margin-bottom: 10px;">🎬</div>""",
                 unsafe_allow_html=True
             )
 
@@ -57,64 +49,29 @@ def movie_card(details, similarity, card_index=0):
 
         with c1:
             st.markdown(
-                textwrap.dedent(
-                    f"""
-                    <div class="rating-badge">
-                        ⭐ {rating_text}
-                    </div>
-                    """
-                ),
+                f"""<div class="rating-badge">⭐ {rating_text}</div>""",
                 unsafe_allow_html=True
             )
 
         with c2:
             st.markdown(
-                textwrap.dedent(
-                    f"""
-                    <div class="year-badge">
-                        📅 {details.get("year") or "N/A"}
-                    </div>
-                    """
-                ),
+                f"""<div class="year-badge">📅 {details.get("year") or "N/A"}</div>""",
                 unsafe_allow_html=True
             )
 
         st.markdown(
-            textwrap.dedent(
-                f"""
-                <div class="movie-title">
-                    {details.get("title", "Sem título")}
-                </div>
-                """
-            ),
+            f"""<div class="movie-title">{details.get("title", "Sem título")}</div>""",
             unsafe_allow_html=True
         )
 
         st.markdown(
-            textwrap.dedent(
-                f"""
-                <div class="compatibility">
-
-                    <div class="compatibility-title">
-                        Compatibilidade
-                    </div>
-
-                    <div class="progress">
-
-                        <div
-                            class="progress-fill"
-                            style="width:{similarity}%;">
-                        </div>
-
-                    </div>
-
-                    <div class="compatibility-value">
-                        {similarity:.1f}%
-                    </div>
-
-                </div>
-                """
-            ),
+            f"""<div class="compatibility">
+<div class="compatibility-title">Compatibilidade</div>
+<div class="progress">
+<div class="progress-fill" style="width:{similarity}%;"></div>
+</div>
+<div class="compatibility-value">{similarity:.1f}%</div>
+</div>""",
             unsafe_allow_html=True
         )
 
