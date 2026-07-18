@@ -1,6 +1,5 @@
 import streamlit as st
 
-
 def navbar():
 
     st.markdown(
@@ -8,9 +7,7 @@ def navbar():
         <div class="navbar">
 
             <div class="navbar-logo">
-
                 🎬 MovieMatch AI
-
             </div>
 
             <div class="navbar-links">
