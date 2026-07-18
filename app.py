@@ -1,26 +1,30 @@
 import streamlit as st
 from recommendation import load_data, recommend, get_movie_details
+from components.styles import load_css
+from components.navbar import navbar
+from components.hero import hero
+from components.movie_selector import movie_selector
+from components.movie_card import movie_card
+from components.footer import footer
 
 st.set_page_config(
-    page_title="Recomendador de Filmes",
+    page_title="MovieMatch AI",
     page_icon="🎬",
     layout="wide"
 )
 
+load_css()
+navbar()
+hero()
+footer()
+
 movies, similarity = load_data()
 
-st.title("🎬 Sistema de Recomendação de Filmes")
-
-st.write(
-    "Escolha um filme e descubra outros títulos semelhantes utilizando Machine Learning."
-)
-
-selected_movie = st.selectbox(
-    "Selecione um filme:",
+selected_movie, recommend_button = movie_selector(
     movies["title"].values
 )
 
-if st.button("🎥 Recomendar"):
+if recommend_button:
 
     with st.spinner("Buscando recomendações..."):
 
@@ -32,6 +36,8 @@ if st.button("🎥 Recomendar"):
 
     if recommendations:
 
+        st.subheader("🍿 Recomendações")
+
         cols = st.columns(5)
 
         for col, movie in zip(cols, recommendations):
@@ -40,39 +46,9 @@ if st.button("🎥 Recomendar"):
 
                 details = get_movie_details(movie["id"])
 
-                if details is None:
-                    st.warning("Informações indisponíveis.")
-                    continue
-
-                if details["poster"]:
-                    st.image(
-                        details["poster"],
-                        use_container_width=True
-                    )
-
-                st.markdown(f"### {details['title']}")
-
-                st.caption(f"⭐ {details['rating']}")
-
-                st.caption(f"📅 {details['year']}")
-
-                st.caption(f"🎭 {details['genres']}")
-
-                st.caption(f"⏱️ {details['runtime']} min")
-
-                overview = details["overview"]
-
-                if overview:
-
-                    if len(overview) > 150:
-                        overview = overview[:150] + "..."
-
-                    st.write(overview)
-
-                st.link_button(
-                    "🎬 Ver no TMDB",
-                    details["tmdb_url"],
-                    use_container_width=True
+                movie_card(
+                    details,
+                    movie["similarity"]
                 )
 
     else:

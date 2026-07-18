@@ -1,0 +1,664 @@
+/* =========================
+   GOOGLE FONT
+========================= */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+
+/* =========================
+   GLOBAL
+========================= */
+
+html,
+body,
+[class*="css"]{
+    font-family: 'Inter', sans-serif;
+}
+
+/* Fundo */
+
+.stApp{
+
+    background: linear-gradient(
+        180deg,
+        #08111F 0%,
+        #101826 100%
+    );
+
+    color: white;
+}
+
+/* =========================
+   TITLES
+========================= */
+
+.main-title{
+
+    font-size:52px;
+
+    font-weight:800;
+
+    color:white;
+
+    margin-bottom:10px;
+}
+
+.subtitle{
+
+    color:#B8C5D6;
+
+    font-size:20px;
+
+    margin-bottom:40px;
+}
+
+/* =========================
+   CARDS
+========================= */
+
+.movie-card{
+
+    background:#172033;
+
+    border-radius:18px;
+
+    padding:18px;
+
+    border:1px solid rgba(255,255,255,.05);
+
+    transition:.3s;
+
+    box-shadow:0 10px 25px rgba(0,0,0,.25);
+
+    height:100%;
+}
+
+.movie-card:hover{
+
+    transform:translateY(-8px);
+
+    box-shadow:0 18px 35px rgba(124,58,237,.30);
+}
+
+/* =========================
+   BUTTONS
+========================= */
+
+.stButton>button{
+
+    width:100%;
+
+    background:#7C3AED;
+
+    color:white;
+
+    border:none;
+
+    border-radius:12px;
+
+    padding:14px;
+
+    font-weight:600;
+
+    transition:.3s;
+}
+
+.stButton>button:hover{
+
+    background:#8B5CF6;
+
+    transform:translateY(-2px);
+}
+
+/* =========================
+   SELECTBOX
+========================= */
+
+.stSelectbox{
+
+    margin-top:10px;
+
+    margin-bottom:20px;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer{
+
+    margin-top:80px;
+
+    text-align:center;
+
+    color:#94A3B8;
+
+    font-size:14px;
+}
+
+/* =========================
+   BADGES
+========================= */
+
+.badge{
+
+    display:inline-block;
+
+    background:#7C3AED;
+
+    color:white;
+
+    border-radius:30px;
+
+    padding:5px 12px;
+
+    font-size:12px;
+
+    margin-top:8px;
+}
+
+/* ==========================================
+   NAVBAR
+========================================== */
+
+.navbar{
+
+    position:sticky;
+
+    top:0;
+
+    z-index:999;
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:18px 32px;
+
+    margin-bottom:40px;
+
+    background:rgba(23,32,51,.70);
+
+    backdrop-filter:blur(14px);
+
+    border:1px solid rgba(255,255,255,.06);
+
+    border-radius:18px;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.30);
+}
+
+.navbar-logo{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    font-size:26px;
+
+    font-weight:800;
+
+    color:white;
+}
+
+.navbar-links{
+
+    display:flex;
+
+    gap:28px;
+
+    align-items:center;
+}
+
+.navbar-links a{
+
+    color:#CBD5E1;
+
+    text-decoration:none;
+
+    font-weight:500;
+
+    transition:.3s;
+}
+
+.navbar-links a:hover{
+
+    color:#A855F7;
+}
+
+/* ==========================================
+   HERO
+========================================== */
+
+.hero{
+
+    text-align:center;
+
+    padding:80px 20px 70px;
+
+    margin-bottom:50px;
+
+}
+
+.hero-badge{
+
+    display:inline-block;
+
+    padding:8px 18px;
+
+    border-radius:999px;
+
+    background:rgba(124,58,237,.18);
+
+    color:#C4B5FD;
+
+    font-size:14px;
+
+    font-weight:600;
+
+    margin-bottom:25px;
+
+}
+
+.hero-title{
+
+    font-size:58px;
+
+    font-weight:800;
+
+    color:white;
+
+    line-height:1.1;
+
+    margin-bottom:20px;
+
+}
+
+.hero-description{
+
+    max-width:850px;
+
+    margin:auto;
+
+    color:#94A3B8;
+
+    font-size:20px;
+
+    line-height:1.8;
+
+}
+
+/* ==========================================
+   MOVIE SELECTOR
+========================================== */
+
+.selector-card{
+
+    max-width:900px;
+
+    margin:auto;
+
+    text-align:center;
+
+    background:#172033;
+
+    padding:40px;
+
+    border-radius:24px;
+
+    border:1px solid rgba(255,255,255,.05);
+
+    box-shadow:0 15px 35px rgba(0,0,0,.30);
+
+    margin-bottom:25px;
+}
+
+.selector-icon{
+
+    font-size:42px;
+
+    margin-bottom:15px;
+}
+
+.selector-title{
+
+    color:white;
+
+    font-size:34px;
+
+    font-weight:700;
+
+    margin-bottom:12px;
+}
+
+.selector-subtitle{
+
+    color:#94A3B8;
+
+    font-size:17px;
+
+    line-height:1.8;
+
+    margin-bottom:10px;
+}
+
+/* Selectbox */
+
+div[data-baseweb="select"]{
+
+    border-radius:14px;
+
+    background:#0F172A;
+}
+
+div[data-baseweb="select"] > div{
+
+    border-radius:14px !important;
+
+    background:#0F172A !important;
+
+    border:1px solid rgba(255,255,255,.08);
+}
+
+/* ==========================================
+   MOVIE CARD
+========================================== */
+
+.movie-title{
+
+    font-size:24px;
+
+    font-weight:700;
+
+    color:white;
+
+    margin-top:12px;
+
+    margin-bottom:10px;
+}
+
+.rating-badge{
+
+    background:#F59E0B;
+
+    color:white;
+
+    text-align:center;
+
+    padding:8px;
+
+    border-radius:12px;
+
+    font-weight:700;
+
+    margin-bottom:10px;
+}
+
+.year-badge{
+
+    background:#2563EB;
+
+    color:white;
+
+    text-align:center;
+
+    padding:8px;
+
+    border-radius:12px;
+
+    font-weight:700;
+
+    margin-bottom:10px;
+}
+
+.stImage img{
+
+    border-radius:18px;
+
+    transition:.35s;
+}
+
+.stImage img:hover{
+
+    transform:scale(1.03);
+}
+
+/* ================================
+   EXPANDER
+================================ */
+
+.streamlit-expanderHeader{
+
+    background:#172033;
+
+    color:white;
+
+    border-radius:14px;
+
+    font-weight:600;
+}
+
+.streamlit-expanderContent{
+
+    background:#111827;
+
+    border-radius:0 0 14px 14px;
+}
+
+.badge-container{
+
+display:flex;
+
+gap:10px;
+
+flex-wrap:wrap;
+
+margin-top:8px;
+
+margin-bottom:14px;
+
+}
+
+.genre-badge{
+
+background:#8B5CF6;
+
+padding:6px 12px;
+
+border-radius:30px;
+
+font-size:12px;
+
+font-weight:600;
+
+}
+
+.runtime-badge{
+
+background:#2563EB;
+
+padding:6px 12px;
+
+border-radius:30px;
+
+font-size:12px;
+
+font-weight:600;
+
+}
+
+/* ==========================================
+   COMPATIBILIDADE
+========================================== */
+
+.compatibility{
+
+    margin:18px 0;
+}
+
+.compatibility-title{
+
+    color:#CBD5E1;
+
+    font-size:14px;
+
+    margin-bottom:8px;
+
+    font-weight:600;
+}
+
+.progress{
+
+    width:100%;
+
+    height:10px;
+
+    background:#334155;
+
+    border-radius:20px;
+
+    overflow:hidden;
+}
+
+.progress-fill{
+
+    height:100%;
+
+    background:linear-gradient(
+        90deg,
+        #7C3AED,
+        #A855F7
+    );
+
+    border-radius:20px;
+}
+
+.compatibility-value{
+
+    margin-top:8px;
+
+    color:white;
+
+    font-weight:700;
+
+    font-size:14px;
+}
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+.footer{
+
+    margin-top:80px;
+
+    padding:50px 20px;
+
+    text-align:center;
+
+    color:#CBD5E1;
+
+}
+
+.footer hr{
+
+    border:0;
+
+    height:1px;
+
+    background:rgba(255,255,255,.08);
+
+    margin-bottom:40px;
+
+}
+
+.footer h3{
+
+    color:white;
+
+    font-size:28px;
+
+    margin-bottom:15px;
+
+}
+
+.footer p{
+
+    max-width:700px;
+
+    margin:auto;
+
+    line-height:1.8;
+
+    color:#94A3B8;
+
+}
+
+.footer-tech{
+
+    margin-top:30px;
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:14px;
+
+    flex-wrap:wrap;
+
+}
+
+.footer-tech span{
+
+    background:#172033;
+
+    padding:8px 16px;
+
+    border-radius:25px;
+
+    font-size:14px;
+
+    border:1px solid rgba(255,255,255,.05);
+
+}
+
+.footer-links{
+
+    margin-top:35px;
+
+    display:flex;
+
+    justify-content:center;
+
+    gap:30px;
+
+}
+
+.footer-links a{
+
+    color:#A855F7;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+}
+
+.footer-links a:hover{
+
+    color:white;
+
+}
+
+.footer-copy{
+
+    margin-top:30px;
+
+    font-size:13px;
+
+    color:#64748B;
+
+}

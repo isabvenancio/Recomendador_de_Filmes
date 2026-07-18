@@ -55,14 +55,15 @@ def recommend(movie, movies, similarity):
 
     recommendations = []
 
-    for movie_index, _ in movie_list:
+    for movie_index, score in movie_list:
 
         movie = movies.iloc[movie_index]
 
         recommendations.append(
             {
                 "id": int(movie["movie_id"]),
-                "title": movie["title"]
+                "title": movie["title"],
+                "similarity": round(score * 100, 1)
             }
         )
 
@@ -84,23 +85,43 @@ def get_movie_details(movie_id):
 
         return {
             "title": data.get("title"),
+
+            "original_title": data.get("original_title"),
+
             "poster": (
                 f"https://image.tmdb.org/t/p/w500{data['poster_path']}"
                 if data.get("poster_path")
                 else None
             ),
+
             "overview": data.get("overview"),
-            "rating": data.get("vote_average"),
+
+            "rating": round(data.get("vote_average", 0), 1),
+
+            "votes": data.get("vote_count"),
+
             "year": (
                 data.get("release_date", "")[:4]
                 if data.get("release_date")
                 else ""
             ),
+
             "genres": ", ".join(
-                genre["name"] for genre in data.get("genres", [])
+                g["name"]
+                for g in data.get("genres", [])
             ),
+
             "runtime": data.get("runtime"),
+
+            "language": data.get("original_language"),
+
+            "popularity": round(
+                data.get("popularity", 0),
+                1
+            ),
+
             "homepage": data.get("homepage"),
+
             "tmdb_url": f"https://www.themoviedb.org/movie/{movie_id}"
         }
 
