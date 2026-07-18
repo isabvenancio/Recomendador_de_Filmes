@@ -6,104 +6,131 @@ def movie_card(details, similarity):
     """
     Exibe um card moderno com as informações do filme.
     """
-    
-    genres = details.get("genres") or "Não informado"
-    runtime = details.get("runtime")
+    if not details:
+        details = {
+            "id": 0,
+            "title": "Filme Indisponível",
+            "poster": None,
+            "rating": 0.0,
+            "year": "N/A",
+            "genres": "Não informado",
+            "runtime": 0,
+            "overview": "Não foi possível carregar os detalhes deste filme.",
+            "tmdb_url": "https://www.themoviedb.org"
+        }
 
-    runtime_text = f"{runtime} min" if runtime else "Não informado"
+    with st.container():
+        # Injeta uma div âncora para que o CSS `:has()` estilize o container do Streamlit
+        st.markdown('<div class="movie-card-anchor"></div>', unsafe_allow_html=True)
 
-    # Poster
-    if details["poster"]:
-        st.image(
-            details["poster"],
-            use_container_width=True
-        )
+        genres = details.get("genres") or "Não informado"
+        runtime = details.get("runtime")
+        runtime_text = f"{runtime} min" if runtime else "Não informado"
 
-    # Nota e ano
-    c1, c2 = st.columns(2)
+        # Poster
+        if details.get("poster"):
+            st.image(
+                details["poster"],
+                use_container_width=True
+            )
+        else:
+            # Espaço reservado visualmente agradável se não houver poster
+            st.markdown(
+                """
+                <div style="height: 270px; background: #1E293B; border-radius: 18px; 
+                            display: flex; align-items: center; justify-content: center;
+                            font-size: 40px; border: 1px dashed rgba(255,255,255,0.1); margin-bottom: 10px;">
+                    🎬
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
 
-    with c1:
+        # Nota e ano
+        c1, c2 = st.columns(2)
+
+        rating_val = details.get("rating", 0.0)
+        rating_text = f"{rating_val:.1f}" if rating_val else "N/A"
+
+        with c1:
+            st.markdown(
+                f"""
+                <div class="rating-badge">
+                    ⭐ {rating_text}
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
+        with c2:
+            st.markdown(
+                f"""
+                <div class="year-badge">
+                    📅 {details.get("year") or "N/A"}
+                </div>
+                """,
+                unsafe_allow_html=True
+            )
+
         st.markdown(
             f"""
-            <div class="rating-badge">
-                ⭐ {details["rating"]}
+            <div class="movie-title">
+                {details.get("title", "Sem título")}
             </div>
             """,
             unsafe_allow_html=True
         )
 
-    with c2:
         st.markdown(
             f"""
-            <div class="year-badge">
-                📅 {details["year"]}
-            </div>
-            """,
-            unsafe_allow_html=True
-        )
+            <div class="compatibility">
 
-    st.markdown(
-        f"""
-        <div class="movie-title">
-            {details["title"]}
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
+                <div class="compatibility-title">
+                    Compatibilidade
+                </div>
 
-    st.markdown(
-        f"""
-        <div class="compatibility">
+                <div class="progress">
 
-            <div class="compatibility-title">
-                Compatibilidade
-            </div>
+                    <div
+                        class="progress-fill"
+                        style="width:{similarity}%;">
+                    </div>
 
-            <div class="progress">
+                </div>
 
-                <div
-                    class="progress-fill"
-                    style="width:{similarity}%;">
+                <div class="compatibility-value">
+                    {similarity:.1f}%
                 </div>
 
             </div>
+            """,
+            unsafe_allow_html=True
+        )
 
-            <div class="compatibility-value">
-                {similarity:.1f}%
-            </div>
+        if similarity >= 90:
+            reason = "🔥 Excelente correspondência"
+        elif similarity >= 80:
+            reason = "⭐ Muito semelhante"
+        elif similarity >= 70:
+            reason = "🎯 Boa recomendação"
+        else:
+            reason = "🎬 Vale a pena conhecer"
 
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-    if similarity >= 90:
-        reason = "🔥 Excelente correspondência"
+        st.caption(reason)
+        st.caption(f"🎭 {genres}")
+        st.caption(f"⏱️ {runtime_text}")
 
-    elif similarity >= 80:
-        reason = "⭐ Muito semelhante"
+        overview = details.get("overview") or ""
+        if len(overview) > 120:
+            overview = overview[:120] + "..."
+        st.write(overview)
 
-    elif similarity >= 70:
-        reason = "🎯 Boa recomendação"
+        # Botão para abrir o dialog com os detalhes completos do filme
+        if st.button("🔍 Ver Detalhes", key=f"btn_{details.get('id', 0)}", use_container_width=True):
+            movie_details(details)
 
-    else:
-        reason = "🎬 Vale a pena conhecer"
-
-    st.caption(reason)
-
-    st.caption(f"🎭 {genres}")
-    st.caption(f"⏱️ {runtime_text}")
-
-    overview = details["overview"] or ""
-
-    if len(overview) > 160:
-        overview = overview[:160] + "..."
-
-    st.write(overview)
-
-    st.link_button(
-    "🎬 Ver no TMDB",
-    details["tmdb_url"],
-    use_container_width=True
-    )
-
-    movie_details(details)
+        st.link_button(
+            "🎬 TMDB",
+            details.get("tmdb_url", "https://www.themoviedb.org"),
+            use_container_width=True
+        )

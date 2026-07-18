@@ -10,10 +10,10 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 BASE_DIR = Path(__file__).parent
 
-API_KEY = st.secrets["TMDB_API_KEY"]
+API_KEY = st.secrets.get("TMDB_API_KEY") if "TMDB_API_KEY" in st.secrets else None
 
 
-@st.cache_resource
+@st.cache_data
 def load_data():
     """
     Carrega os dados processados e gera a matriz de similaridade.
@@ -71,11 +71,10 @@ def recommend(movie, movies, similarity):
 
 @st.cache_data(show_spinner=False)
 def get_movie_details(movie_id):
-    url = (
-        f"https://api.themoviedb.org/3/search/movie"
-        f"?api_key={API_KEY}"
-        "&language=pt-BR"
-    )
+    if not API_KEY:
+        return None
+
+    url = f"https://api.themoviedb.org/3/movie/{movie_id}?api_key={API_KEY}&language=pt-BR"
 
     try:
         response = requests.get(url, timeout=10)

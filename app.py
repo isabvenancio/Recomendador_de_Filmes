@@ -16,7 +16,6 @@ st.set_page_config(
 load_css()
 navbar()
 hero()
-footer()
 
 movies, similarity = load_data()
 
@@ -45,6 +44,24 @@ if recommend_button:
             with col:
 
                 details = get_movie_details(movie["id"])
+                
+                if not details:
+                    # Fallback local com base nos dados que já possuímos
+                    details = {
+                        "id": movie["id"],
+                        "title": movie["title"],
+                        "poster": None,
+                        "rating": 0.0,
+                        "votes": 0,
+                        "year": "N/A",
+                        "genres": "Não informado",
+                        "runtime": None,
+                        "language": "N/A",
+                        "popularity": 0.0,
+                        "overview": "Detalhes indisponíveis no momento (sem conexão com TMDB).",
+                        "homepage": None,
+                        "tmdb_url": f"https://www.themoviedb.org/movie/{movie['id']}"
+                    }
 
                 movie_card(
                     details,
@@ -53,3 +70,5 @@ if recommend_button:
 
     else:
         st.error("Nenhuma recomendação encontrada.")
+
+footer()

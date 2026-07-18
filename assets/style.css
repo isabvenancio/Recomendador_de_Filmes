@@ -55,7 +55,7 @@ body,
    CARDS
 ========================= */
 
-.movie-card{
+div[data-testid="stVerticalBlock"]:has(> div > .movie-card-anchor) {
 
     background:#172033;
 
@@ -72,7 +72,7 @@ body,
     height:100%;
 }
 
-.movie-card:hover{
+div[data-testid="stVerticalBlock"]:has(> div > .movie-card-anchor):hover {
 
     transform:translateY(-8px);
 
