@@ -1,106 +1,140 @@
-# 🎬 Sistema de Recomendação de Filme
+# 🎬 MovieMatch AI - Movie Recommendation System
 
-Este projeto implementa um sistema de recomendação de filmes baseado em conteúdo (*Content-Based Filtering*), utilizando informações como sinopse, gênero, elenco e palavras-chave para sugerir filmes semelhantes.
+Uma aplicação web desenvolvida em **Python** que utiliza técnicas de **Machine Learning** e **Processamento de Linguagem Natural (NLP)** para recomendar filmes semelhantes com base em suas características.
 
-O sistema foi desenvolvido em **Python** utilizando **Jupyter Notebook** e técnicas de Processamento de Linguagem Natural (NLP).
+O sistema utiliza o método **Content-Based Filtering**, analisando informações como sinopse, gêneros, elenco, diretor e palavras-chave para encontrar filmes similares.
+
+Após o treinamento, o modelo é salvo em arquivos **Pickle (.pkl)**, permitindo que a aplicação carregue instantaneamente sem necessidade de processar novamente o dataset.
 
 ---
 
-## 📌 Funcionalidades
+## 🚀 Funcionalidades
 
-- Leitura da base de dados do TMDB.
-- União dos arquivos de filmes e créditos.
+- 🎬 Recomendação de filmes por similaridade.
+- 🖼️ Exibição dos pôsteres utilizando a API do TMDB.
+- ⭐ Exibição da avaliação do filme.
+- 📅 Exibição da data de lançamento.
+- 🎭 Exibição dos gêneros.
+- 📝 Exibição da sinopse.
+- 🔎 Pesquisa de filmes através de uma interface intuitiva.
+- 🌐 Interface web desenvolvida com Streamlit.
+- ⚡ Carregamento rápido utilizando arquivos Pickle.
+- ☁️ Deploy da aplicação para acesso online.
+
+---
+
+## 🧠 Como funciona
+
+## 🧠 Como funciona
+
+O modelo foi desenvolvido utilizando o **TMDB 5000 Movie Dataset**.
+
+Durante a fase de treinamento são realizadas as seguintes etapas:
+
+- Junção das bases de filmes e créditos.
 - Limpeza e tratamento dos dados.
-- Extração de informações relevantes (gêneros, elenco, palavras-chave e descrição).
-- Criação de uma coluna de características ("tags").
-- Vetorização do texto utilizando **CountVectorizer**.
-- Cálculo da similaridade entre filmes com **Cosine Similarity**.
-- Recomendação dos 5 filmes mais semelhantes ao título informado.
+- Extração de:
+  - Sinopse
+  - Gêneros
+  - Palavras-chave
+  - Elenco
+  - Diretor
+- Criação de uma coluna contendo todas as características do filme.
+- Vetorização utilizando **CountVectorizer**.
+- Cálculo da similaridade utilizando **Cosine Similarity**.
+- Serialização do modelo em arquivos **.pkl** para utilização na aplicação.
+
+A aplicação web utiliza apenas os arquivos gerados (`movie_list.pkl` e `similarity.pkl`), dispensando o processamento do dataset a cada inicialização.
 
 ---
 
-## 🛠 Tecnologias Utilizadas
+## 🛠️ Tecnologias Utilizadas
+
+### Linguagem
 
 - Python 3
-- Jupyter Notebook
+
+### Bibliotecas
+
 - Pandas
 - Scikit-learn
-- AST (literal_eval)
+- Streamlit
+- Requests
+- Pickle
+- AST
+
+### Machine Learning
+
+- Content-Based Filtering
+- CountVectorizer
+- Cosine Similarity
+
+### APIs
+
+- TMDB API
+
+### Dataset
+
+- TMDB 5000 Movie Dataset (Kaggle)
 
 ---
 
-## 📂 Base de Dados
+## ▶️ Como Executar
 
-Foi utilizada a base pública do **TMDB 5000 Movie Dataset**, disponível no Kaggle.
-
-Baixe os arquivos e coloque-os na pasta raiz do projeto:
-- `tmdb_5000_movies.csv`
-- `tmdb_5000_credits.csv`
-
----
-
-## 📦 Instalação
-
-Clone o repositório:
+### 1. Clone o repositório
 
 ```bash
-git clone https://github.com/seu-usuario/seu-repositorio.git
+git clone https://github.com/seu-usuario/movie-recommendation.git
 ```
 
-Instale as dependências:
+### 2. Entre na pasta
 
 ```bash
-pip install pandas scikit-learn
+cd movie-recommendation
 ```
 
-Ou, caso utilize o Jupyter Notebook:
+### 3. Instale as dependências
 
-```python
-!pip install pandas scikit-learn
+```bash
+pip install -r requirements.txt
 ```
 
+### 4. Configure sua chave da API do TMDB
+
+Adicione sua chave da API no arquivo responsável pelas requisições.
+
+### 5. Execute
+
+```bash
+streamlit run app.py
+```
 ---
 
-## ▶️ Como executar
+## 📸 Funcionalidades da Interface
 
-1. Baixe os arquivos do dataset do TMDB.
-2. Coloque os arquivos `.csv` na mesma pasta do notebook.
-3. Execute todas as células do notebook em ordem.
-4. Utilize a função:
+A aplicação permite:
 
-```python
-recommend("Avatar")
-```
-
-Exemplo de saída:
-
-```
-Guardians of the Galaxy
-John Carter
-Star Trek Into Darkness
-Aliens
-Star Trek Beyond
-```
-
----
-
-## ⚙️ Como funciona
-
-O algoritmo segue as seguintes etapas:
-
-1. Carrega os datasets.
-2. Une as informações de filmes e créditos.
-3. Seleciona apenas os atributos relevantes.
-4. Converte colunas em formato JSON para listas.
-5. Cria uma coluna chamada **tags**, reunindo todas as características do filme.
-6. Transforma as tags em vetores numéricos utilizando **CountVectorizer**.
-7. Calcula a similaridade entre todos os filmes usando **Cosine Similarity**.
-8. Retorna os filmes mais semelhantes ao escolhido pelo usuário.
+- Pesquisar um filme.
+- Visualizar recomendações semelhantes.
+- Exibir pôsteres.
+- Visualizar nota do TMDB.
+- Visualizar gêneros.
+- Visualizar data de lançamento.
+- Ler a sinopse de cada filme recomendado.
 
 ---
 
 ## 🚀 Melhorias Futuras
 
+- Utilizar **TF-IDF** para aprimorar a vetorização dos textos.
+- Implementar **Stemming** utilizando NLTK.
+- Adicionar busca inteligente (*Fuzzy Search*).
+- Exibir o percentual de similaridade entre os filmes.
+- Sistema de favoritos.
+- Histórico de pesquisas.
+- Salvar o modelo utilizando **Pickle** para reduzir o tempo de carregamento.
+- Sistema híbrido de recomendação (Content-Based + Collaborative Filtering).
+- Containerização da aplicação com Docker.
 - Pesquisa por aproximação de nomes de filmes.
 - Recomendação personalizada baseada em avaliações dos usuários.
 - Colocar filmes de acordo com seu gosto musical (ouço ABBA, recomenda Mamma Mia)
